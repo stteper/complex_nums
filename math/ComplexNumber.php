@@ -13,12 +13,12 @@ class ComplexNumber
      * ComplexNumber constructor.
      * @param int $re
      * @param int $im
-     * @throws ComplexNumberException
+     * @throws \Math\Exceptions\ComplexNumberException
      */
     public function __construct($re = 0, $im =0)
     {
         if(is_nan($re) || is_nan($im)) {
-            throw new ComplexNumberException('Invalid value of the real or imaginary part!');
+            throw new \Math\Exceptions\ComplexNumberException('Invalid value of the real or imaginary part!');
         }
         $this->re = $re;
         $this->im = $im;
@@ -38,12 +38,12 @@ class ComplexNumber
     /**
      * @param string $name
      * @return mixed
-     * @throws ComplexNumberException
+     * @throws \Math\Exceptions\ComplexNumberException
      */
     public function __get(string $name)
     {
         if(!in_array($name, ['re', 'im'])) {
-            throw new ComplexNumberException('The property '.htmlentities($name) .'isn\'t available for complex numbers!');
+            throw new \Math\Exceptions\ComplexNumberException('The property '.htmlentities($name) .'isn\'t available for complex numbers!');
         }
 
         return $this->$name;
@@ -54,6 +54,7 @@ class ComplexNumber
      * Adding a number/numbers to the current one
      * @param array|Int|Float|ComplexNumber $numbers
      * @return ComplexNumber
+     * @throws \Math\Exceptions\ComplexNumberException
      */
     public function add($numbers): ComplexNumber
     {
@@ -70,18 +71,43 @@ class ComplexNumber
                 continue;
             }
             if(is_nan($number)) {
-                throw new ComplexNumberException('Invalid value '. $number .'!');
+                throw new \Math\Exceptions\ComplexNumberException('Invalid value '. $number .'!');
             }
             $this->re += $number;
         }
         return $this;
     }
+    /**
+     * Subtracting a number/numbers to the current one
+     * @param array|Int|Float|ComplexNumber $numbers
+     * @return ComplexNumber
+     * @throws \Math\Exceptions\ComplexNumberException
+     */
+    public function sub($numbers): ComplexNumber
+    {
+        if(!is_array($numbers)) {
+            $numbers = [$numbers];
+        }
+        foreach($numbers as $number) {
+            if(!$number) {
+                continue;
+            }
+            if($number instanceof __CLASS__ ) {
+                $this->re -= $number->re;
+                $this->im -= $number->im;
+                continue;
+            }
+            if(is_nan($number)) {
+                throw new \Math\Exceptions\ComplexNumberException('Invalid value '. $number .'!');
+            }
+            $this->re -= $number;
+        }
+        return $this;
+    }
 
 
+    public function mul($numbers): ComplexNumber
+    {
 
-}
-
-class ComplexNumberException  extends \Exception
-{
-
+    }
 }
