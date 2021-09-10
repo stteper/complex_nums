@@ -1,0 +1,19 @@
+{
+    "name": "stteper/numbers",
+    "description": "Operations with complex numbers",
+    "authors": [
+        {
+            "name": "stteper",
+            "email": "stteper@mail.ru"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Math\\": "math"
+        }
+    }
+}
