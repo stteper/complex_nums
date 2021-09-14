@@ -294,5 +294,45 @@ class ComplexTest extends TestCase
     /**
      * Test div method
      */
+    public function testDivNumber()
+    {
+        $text = $this->complex->div(5);
+        $this->assertEquals('1+j1.4', $text);
+    }
 
+    public function testDivArrayOfNumber()
+    {
+        $text = $this->complex->div([5,0.2,-2]);
+        $this->assertEquals('-2.5-j3.5', $text);
+    }
+
+    public function testDivComplex()
+    {
+        $a = new \Math\ComplexNumber(-1, -2);
+        $text = $this->complex->div($a);
+        $this->assertEquals('-3.8-j0.6', $text);
+    }
+
+    public function testDivArrayOfComplex()
+    {
+        $arr = [
+            new \Math\ComplexNumber(-1, -2),
+            new \Math\ComplexNumber(0.2, 0.1),
+            new \Math\ComplexNumber(0.5, 1)
+        ];
+
+        $text = $this->complex->div($arr);
+        $this->assertEquals('2.4+j15.2', $text);
+    }
+
+    public function testDivArrayOfDiffTypes()
+    {
+        $arr = [
+            new \Math\ComplexNumber(-1, -2),
+            5
+        ];
+
+        $text = $this->complex->div($arr);
+        $this->assertEquals('-0.76+j0.12', $text);
+    }
 }

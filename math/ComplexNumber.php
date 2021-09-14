@@ -179,7 +179,7 @@ class ComplexNumber
             }
             if($number instanceof ComplexNumber ) {
                 $re = $this->re;
-                $denumenator = sqr($number->re) + sqr($this->im);
+                $denumenator = pow($number->re,2) + pow($this->im,2);
                 $this->re = ($this->re * $number->re + $this->im * $number->im) / $denumenator;
                 $this->im = ($this->im * $number->re - $re * $number->im) / $denumenator;
                 continue;
